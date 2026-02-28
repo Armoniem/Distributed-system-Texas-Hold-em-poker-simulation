@@ -4,13 +4,13 @@ metadata:
   name: pokereval-ingress
   namespace: default
   annotations:
-    # To reserve a static IP run:
-    # gcloud compute addresses create pokereval-ip --global
-    # Then set:
-    # kubernetes.io/ingress.global-static-ip-name: "pokereval-ip"
+    kubernetes.io/ingress.class: "gce"
 spec:
-  # GKE uses the "gce" class for its native HTTP(S) load balancer
-  ingressClassName: gce
+  defaultBackend:
+    service:
+      name: pokereval-frontend
+      port:
+        number: 80
   rules:
     - http:
         paths:

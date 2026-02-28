@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: REGION-docker.pkg.dev/PROJECT_ID/pokereval/frontend:latest
+          image: europe-west1-docker.pkg.dev/temp-convertor-485913/pokereval/frontend:latest
           imagePullPolicy: Always
           ports:
             - name: http

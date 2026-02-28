@@ -1,0 +1,5 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'BACKEND_URL=http://130.211.31.109', '-t', 'europe-west1-docker.pkg.dev/$PROJECT_ID/pokereval/frontend:latest', '-f', 'frontend/Dockerfile', './frontend']
+images:
+- 'europe-west1-docker.pkg.dev/$PROJECT_ID/pokereval/frontend:latest'

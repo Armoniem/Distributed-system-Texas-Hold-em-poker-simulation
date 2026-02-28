@@ -6,7 +6,7 @@ metadata:
   labels:
     app: pokereval-frontend
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: pokereval-frontend
   ports:

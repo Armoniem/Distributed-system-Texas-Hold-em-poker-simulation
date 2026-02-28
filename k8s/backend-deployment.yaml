@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: REGION-docker.pkg.dev/PROJECT_ID/pokereval/backend:latest
+          image: europe-west1-docker.pkg.dev/temp-convertor-485913/pokereval/backend:latest
           imagePullPolicy: Always
           ports:
             - name: grpc

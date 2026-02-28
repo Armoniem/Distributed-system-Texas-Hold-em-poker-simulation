@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pokereval-backend
+  namespace: default
+  labels:
+    app: pokereval-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: pokereval-backend
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+    - name: grpc
+      port: 50051
+      targetPort: 50051
+      protocol: TCP

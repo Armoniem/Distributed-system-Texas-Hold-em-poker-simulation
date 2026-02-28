@@ -1,0 +1,49 @@
+# .gitignore for PokerEval
+
+# ─── Go ───────────────────────────────────────────────────────────────────────
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/vendor/
+/bin/
+
+# ─── Flutter / Dart ──────────────────────────────────────────────────────────
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+frontend/.dart_tool/
+frontend/build/
+*.g.dart
+*.freezed.dart
+
+# ─── Docker ───────────────────────────────────────────────────────────────────
+.dockerignore
+
+# ─── GCloud / Kubernetes ─────────────────────────────────────────────────────
+.gcloud/
+kubeconfig
+*.kubeconfig
+
+# ─── IDE ──────────────────────────────────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ─── Secrets / env ───────────────────────────────────────────────────────────
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+service-account-key.json

@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package pokereval;
+
+option go_package = "github.com/armoniem/pokereval/backend/gen/pokereval";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Service definition
+// ─────────────────────────────────────────────────────────────────────────────
+
+service PokerEval {
+  // EvaluateHand: given 2 hole cards + 5 community cards, return the best hand.
+  rpc EvaluateHand(EvaluateHandRequest) returns (EvaluateHandResponse);
+
+  // CompareHands: compare two full hands and return the winner.
+  rpc CompareHands(CompareHandsRequest) returns (CompareHandsResponse);
+
+  // CalculateWinProbability: Monte Carlo win-probability estimation.
+  rpc CalculateWinProbability(ProbabilityRequest) returns (ProbabilityResponse);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EvaluateHand
+// ─────────────────────────────────────────────────────────────────────────────
+
+message EvaluateHandRequest {
+  // Two hole cards, e.g. ["HA", "SK"]
+  repeated string hole_cards = 1;
+  // Five community cards, e.g. ["HT", "D2", "C7", "S9", "HQ"]
+  repeated string community_cards = 2;
+}
+
+message EvaluateHandResponse {
+  // Best 5-card hand (card strings)
+  repeated string best_hand = 1;
+  // Human-readable category, e.g. "Full House"
+  string category = 2;
+  // Numerical strength for comparison (higher = stronger)
+  int64 strength = 3;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CompareHands
+// ─────────────────────────────────────────────────────────────────────────────
+
+message CompareHandsRequest {
+  repeated string hole_cards_1      = 1;
+  repeated string community_cards_1 = 2;
+  repeated string hole_cards_2      = 3;
+  repeated string community_cards_2 = 4;
+}
+
+message CompareHandsResponse {
+  EvaluateHandResponse hand1  = 1;
+  EvaluateHandResponse hand2  = 2;
+  // "player1", "player2", or "draw"
+  string               winner = 3;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CalculateWinProbability
+// ─────────────────────────────────────────────────────────────────────────────
+
+message ProbabilityRequest {
+  // Your two hole cards
+  repeated string hole_cards       = 1;
+  // 0, 3, 4, or 5 community cards already dealt
+  repeated string community_cards  = 2;
+  // Total number of players (including you)
+  int32           num_players      = 3;
+  // Monte Carlo simulation count
+  int32           num_simulations  = 4;
+}
+
+message ProbabilityResponse {
+  double win_probability  = 1; // 0.0 – 100.0
+  double draw_probability = 2; // 0.0 – 100.0
+  int32  simulations_run  = 3;
+  int64  win_count        = 4;
+  int64  draw_count       = 5;
+}

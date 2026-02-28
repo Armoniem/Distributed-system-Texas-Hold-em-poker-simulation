@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pokereval-ingress
+  namespace: default
+  annotations:
+    # To reserve a static IP run:
+    # gcloud compute addresses create pokereval-ip --global
+    # Then set:
+    # kubernetes.io/ingress.global-static-ip-name: "pokereval-ip"
+spec:
+  # GKE uses the "gce" class for its native HTTP(S) load balancer
+  ingressClassName: gce
+  rules:
+    - http:
+        paths:
+          # Backend REST/gRPC-gateway — all API paths
+          - path: /pokereval.PokerEval
+            pathType: Prefix
+            backend:
+              service:
+                name: pokereval-backend
+                port:
+                  number: 8080
+          # Health check route
+          - path: /healthz
+            pathType: Exact
+            backend:
+              service:
+                name: pokereval-backend
+                port:
+                  number: 8080
+          # Frontend — catch-all (must be last)
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pokereval-frontend
+                port:
+                  number: 80

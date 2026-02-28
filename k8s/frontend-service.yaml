@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pokereval-frontend
+  namespace: default
+  labels:
+    app: pokereval-frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: pokereval-frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
